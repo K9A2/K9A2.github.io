@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>文章内容</title>
+    <link rel="SHORTCUT ICON" href="./img/icon.jpg">
+    <script src="./js/jquery.min.js">
+    </script>
+    <link rel="stylesheet" href="css/github.css"/>
+    <script src="js/marked.js"></script>
+    <link href="css/prettify.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/content.css" rel="stylesheet">
+
+    <script src="js/storm.js"></script>
+    <script>
+        //获取文章正文
+        $.get("./md/" + getParaValue("name") + ".md").success(function (content) {
+            $(".markdown-body").append(marked(content));
+            $("pre").addClass("prettyprint linenums");
+            $("title").html($("h1").html());
+        }).error(RedirectTo404);
+    </script>
+
+    <!--
+        todo: 增加返回首页功能
+    -->
+
+</head>
+<body>
+
+<div id="nav">
+    <ul class="nav-list">
+        <li class="nav-list-item"><a href="./index.html" target="_blank">stormlin</a></li>
+        <script>
+            getCategories();
+        </script>
+    </ul>
+</div>
+
+<div id="blog-info">
+
+    <img id="avatar" src="img/icon.jpg">
+    <br>
+    <a id="user-name" href="./index.html">stormlin</a>
+    <p>Yet another full stack developer</p>
+
+</div>
+
+<div id="main">
+
+    <div id="content">
+        <article class="markdown-body">
+
+        </article>
+    </div>
+
+</div>
+
+<!--代码高亮-->
+<script src="js/run_prettify.js?lang=css&amp;skin=default"></script>
+
+</body>
+</html>
