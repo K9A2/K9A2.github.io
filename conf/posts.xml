@@ -23,26 +23,26 @@ in a markdown file.
 <posts>
     <post-item>
         <id>1</id>
-        <name>a_java_post</name>
-        <title>A Java Post</title>
-        <category>java</category>
-        <date>2017年5月24日 (GMT+8) 下午6:34</date>
-        <description>This is a java post</description>
+        <name>summary_for_developing_storm_js</name>
+        <title>storm.js 开发总结</title>
+        <category>javascript</category>
+        <date>2017-05-24</date>
+        <description>记录了开发 storm.js 中所遇到的一些要点和坑点。</description>
     </post-item>
     <post-item>
         <id>2</id>
-        <name>2_java_c</name>
-        <title>2 Java Post</title>
-        <category>javascript</category>
-        <date>2017年5月24日 (GMT+8) 下午6:34</date>
-        <description>This is another java post</description>
+        <name>Java_Developer_Handbook</name>
+        <title>阿里巴巴 Java 开发手册</title>
+        <category>java</category>
+        <date>2017-05-29</date>
+        <description>阿里巴巴集团 Java 开发手册</description>
     </post-item>
     <post-item>
         <id>3</id>
-        <name>summary_for_developing_storm_js</name>
-        <title>Summary</title>
+        <name>DataMiningReport</name>
+        <title>FP-Growth 和 K-Means 学习报告</title>
         <category>java</category>
-        <date>2017年5月24日 (GMT+8) 下午6:34</date>
-        <description>记录了开发 storm.js 中所遇到的一些要点和坑点。</description>
+        <date>2017-06-07</date>
+        <description>最近学习了数据挖掘常用的两种算法：FP-Growth 和 K-Means。现在把我的学习结果分享给大家。</description>
     </post-item>
 </posts>

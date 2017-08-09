@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <title>文章内容</title>
     <link rel="SHORTCUT ICON" href="./img/icon.jpg">
     <script src="./js/jquery.min.js">
@@ -14,37 +15,44 @@
 
     <script src="js/storm.js"></script>
     <script>
-        //获取文章正文
-        $.get("./md/" + getParaValue("name") + ".md").success(function (content) {
+        var postName = getParaValue("name");
+        //获取文章信息
+        var post = getPostByName(postName);
+        //获取并渲染写入文章正文
+        var postName = getParaValue("name");
+        //获取文章信息
+        var post = getPostByName(postName);
+        //渲染文章标题
+        $("#title").html("Hello world!");
+        //获取并渲染写入文章正文
+        $.get("./md/" + postName + ".md").success(function (content) {
             $(".markdown-body").append(marked(content));
             $("pre").addClass("prettyprint linenums");
             $("title").html($("h1").html());
+
+            adjustMainHeight();
         }).error(RedirectTo404);
     </script>
-
-    <!--
-        todo: 增加返回首页功能
-    -->
 
 </head>
 <body>
 
 <div id="nav">
-    <ul class="nav-list">
-        <li class="nav-list-item"><a href="./index.html" target="_blank">stormlin</a></li>
-        <script>
-            getCategories();
-        </script>
-    </ul>
+
+    <script>
+        getNavBar();
+    </script>
+
 </div>
 
-<div id="blog-info">
-
-    <img id="avatar" src="img/icon.jpg">
-    <br>
-    <a id="user-name" href="./index.html">stormlin</a>
-    <p>Yet another full stack developer</p>
-
+<div id="title">
+    <div class="container">
+        <script>
+            var info = "<h1>" + post.title + "</h1>" + "<p>" + "<img src='./img/date.png'>" + "  " + post.date + "  " +
+                "<img src='./img/class.png'>" + "  " + getCategoryTextByName(post.category) + "</p>";
+            $("div#title .container").append(info);
+        </script>
+    </div>
 </div>
 
 <div id="main">
@@ -55,10 +63,29 @@
         </article>
     </div>
 
+    <div id="replies">
+        <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+        <script src="https://img1.cache.netease.com/f2e/tie/yun/sdk/loader.js"></script>
+        <script>
+            var cloudTieConfig = {
+                url: document.location.href,
+                sourceId: "",
+                productKey: "4eb2bc057fdf4c72a3abfb849ee0f0b4",
+                target: "cloud-tie-wrapper"
+            };
+            var yunManualLoad = true;
+            Tie.loader("aHR0cHM6Ly9hcGkuZ2VudGllLjE2My5jb20vcGMvbGl2ZXNjcmlwdC5odG1s", true);
+        </script>
+    </div>
+
 </div>
 
 <!--代码高亮-->
 <script src="js/run_prettify.js?lang=css&amp;skin=default"></script>
+
+<script>
+    getFooter();
+</script>
 
 </body>
 </html>

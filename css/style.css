@@ -1,110 +1,54 @@
-/*@media screen and (min-width: 320px) {*/
-/*html {font-size: 26px;}*/
-/*article {*/
-/*margin: auto 15px auto 15px;*/
-/*}*/
-/*body {*/
-/*width: 100%;*/
-/*margin-left: 0;*/
-/*margin-right: 0;*/
-/*border: none;*/
-/*}*/
-/*}*/
-
-/*@media screen and (min-width: 360px) {*/
-/*html {font-size: 28px;}*/
-/*article {*/
-/*margin: auto 15px auto 15px;*/
-/*}*/
-/*body {*/
-/*width: 100%;*/
-/*margin-left: 0;*/
-/*margin-right: 0;*/
-/*border: none;*/
-/*}*/
-/*}*/
-
-/*@media screen and (min-width: 400px) {*/
-/*html {font-size: 30px;}*/
-/*article {*/
-/*margin: auto 15px auto 15px;*/
-/*}*/
-/*body {*/
-/*width: 100%;*/
-/*margin-left: 0;*/
-/*margin-right: 0;*/
-/*border: none;*/
-/*}*/
-/*}*/
-
-/*@media screen and (min-width: 440px) {*/
-/*html {font-size: 32px;}*/
-/*article {*/
-/*margin: auto 15px auto 15px;*/
-/*}*/
-/*body {*/
-/*width: 100%;*/
-/*margin-left: 0;*/
-/*margin-right: 0;*/
-/*border: none;*/
-/*}*/
-/*}*/
-
-/*@media screen and (min-width: 480px) {*/
-/*html {font-size: 34px;}*/
-/*article {*/
-/*margin: auto 15px auto 15px;*/
-/*}*/
-/*body {*/
-/*width: 100%;*/
-/*margin-left: 0;*/
-/*margin-right: 0;*/
-/*border: none;*/
-/*}*/
-/*}*/
-
-/*@media screen and (min-width: 640px) {*/
-/*html {font-size: 28px;}*/
-/*article {*/
-/*margin: auto 15px auto 15px;*/
-/*}*/
-/*body {*/
-/*width: 100%;*/
-/*margin-left: 0;*/
-/*margin-right: 0;*/
-/*border: none;*/
-/*}*/
-/*}*/
-
-/*@media screen and (min-width: 1080px) {*/
-/*html {*/
-/*font-size: 16px;*/
-/*}*/
-/*body {*/
-/*margin: 5% auto;*/
-/*width: 60%;*/
-/*border: none;*/
-/*border: 1px solid #ddd;*/
-/*}*/
-/*}*/
-
-body {
-    /*border-radius: 3px;*/
-    /*padding: 3% 3% 3% 3%;*/
-    font-size: 16px;
-    /*border: 1px solid #ddd;*/
-    /*width: 60%;*/
-    /*margin: 5% auto;*/
+html {
+    width: auto;
 }
 
 body {
+    font-size: 16px;
     margin: 0 auto;
-    background: url("../img/bg.gif") repeat;
+    background: #f7f7f7;
+    overflow-x: visible;
+    font-family: 'Gotham','Microsoft YaHei',"Open Sans","Helvetica Neue",Helvetica,Arial,'Microsoft YaHei',sans-serif;
+}
+
+a:link, :visited, :active {
+    text-decoration: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    word-break: normal;
+}
+
+#title {
+    font-size: 1rem;
+    color: #ffffff;
+    background-color: #000B43;
+    padding: 1rem;
+    margin-top: 3rem;
+}
+
+#title h1 {
+    font-size: 22px;
+    margin: 0;
+    text-align: left;
+}
+
+#title img {
+    width: 1rem;
+    height: 1rem;
+}
+
+#title p {
+    margin-bottom: 0;
+}
+
+a:hover {
+    text-decoration: underline;
 }
 
 div#nav {
-    height: 40px;
-    background-color: #2175bc;
+    height: 3rem;
+    color: #2175bc;
+    background-color: #000B43;
     display: block;
     margin: 0 auto;
     width: 100%;
@@ -114,18 +58,37 @@ div#nav {
     z-index: 9999;
 }
 
+div#icon {
+    display: block;
+    float: left;
+    width: 3rem;
+    height: 3rem;
+    text-align: center;
+}
+
+div#icon a {
+    line-height: 3rem;
+}
+
+div#list {
+    height: inherit;
+}
+
 .nav-list-item {
+    height: 3rem;
+    line-height: 3rem;
     list-style: none;
+    margin-right: 0;
+    margin-bottom: 0;
 }
 
 /*note: inline-block, block, inline 的区别*/
 /*note: 盒模型 px 宽度计算公式，百分比宽度计算公式*/
 /*note: css 固定头部导航条的制作*/
 .nav-list {
-    color: #fff;
+    color: inherit;
     list-style-type: none;
-    width: 70%;
-    margin: 0 18%;
+    margin: 0;
     padding: 0;
     height: inherit;
     display: inline-block;
@@ -135,9 +98,8 @@ div#nav {
 .nav-list li {
     display: block;
     float: left;
-    height: 40px;
-    margin-right: 25px;
-    line-height: 40px;
+    height: 3rem;
+    line-height: 3rem;
     padding-left: 10px;
     padding-right: 10px;
 }
@@ -146,50 +108,117 @@ div#nav {
     text-decoration: none;
 }
 
-.nav-list li:hover {
-    background-color: #2586d7;
-}
-
 .nav-list li a:link {
     text-decoration: none;
-    color: #fff;
+    color: white;
 }
 
 .nav-list li a:visited {
     text-decoration: none;
-    color: #fff;
+    color: white;
 }
 
 .nav-list li a:active {
     text-decoration: none;
-    color: #ffffff;
+    color: white;
+}
+
+.container {
+    width: 60%;
+    margin: 0 17%;
+}
+
+div#title {
+    padding: 1rem;
+    margin-top: 3rem;
+}
+
+div#poster {
+    height: 5rem;
+    background-color: #000B43;
 }
 
 div#main {
     width: 60%;
     background: white;
     box-shadow: 0 0 8px #999;
-    margin: 0 auto;
-    padding: 2% 2% 2%;
+    padding: 3%;
     overflow: auto;
+    margin: 3% auto;
 }
 
 div#blog-info {
-    width: 50%;
-    height: 100%;
+    background-color: #000B43;
+    margin-top: 3rem;
+    padding: 1rem;
     text-align: center;
-    margin: 60px auto 0;
 }
 
-div#blog-info img {
-    width: 8rem;
-    height: 8rem;
+div#blog-info h1 {
+    font-size: 3rem;
+    color: white;
+    margin: 0;
+    font-weight: 500;
+}
+
+div#blog-info h2 {
+    font-size: 1rem;
+    color: white;
+    margin: 0;
+    font-weight: 500;
+}
+
+div#icon img {
+    width: 2rem;
+    height: 2rem;
     margin: 0 auto;
     border-radius: 50%;
     overflow: hidden;
+    display: inline-block;
+    vertical-align: middle;
 }
 
-div#post-list {
+.categoryUnit {
+    padding-bottom: 1rem;
+    border-bottom: 1px #333333 solid;
+}
+
+.categoryUnit:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.categoryTitle {
+    color: #4183c4;
+    font-weight: 500;
+}
+
+.categoryPostUnit {
+    margin-left: 8rem;
+    padding-left: 1rem;
+    color: #333;
+    border-left: 3px solid #666;
+}
+
+.categoryDate {
+    display: inline-block;
+    line-height: 1rem;
+    margin-left: -8rem;
+}
+
+.categoryLink {
+    padding-left: 1rem;
+    margin-left: 1rem;
+}
+
+.categoryPostListItem {
+    padding-left: 1rem;
+}
+
+.categoryPostListItem a {
+    border-left: 1px solid #666;
+    margin-left: 1rem;
+    padding-left: 1rem
 }
 
 div#content {
@@ -215,22 +244,26 @@ a#user-name:active {
     border-bottom: 1px solid #ccc;
 }
 
+.post-item a {
+    color: #000B43;
+}
+
 .postLink:link {
     font-size: 1.5rem;
     text-decoration: none;
-    color: #2175bc;
+    color: #000B43;
     font-weight: bold;
 }
 
 .postLink:active {
     text-decoration: none;
-    color: #2175bc;
+    color: #000B43;
     font-weight: bold;
 }
 
 .postLink:visited {
     text-decoration: none;
-    color: #2175bc;
+    color: #000B43;
     font-weight: bold;
 }
 
@@ -258,9 +291,72 @@ a#user-name:active {
     padding-left: 1rem;
     border-left: 1px solid #000;
     text-decoration: none;
-    color: #2175bc;
+    color: #000B43;
 }
 
 .date_and_category a:visited {
     text-decoration: none;
 }
+
+div#footer {
+    color: #777;
+    font-size: 0.8rem;
+    padding: 1% 0;
+    text-align: center;
+    background-color: #000B43;
+}
+
+div#footer a {
+    color: #777;
+}
+
+/* note: css 文档加载顺序 */
+@media screen and (max-width: 768px) {
+    body {
+        width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+        border: none;
+        background: none;
+    }
+
+    div#nav {
+        height: 3rem;
+        margin: 0 auto;
+        position: fixed;
+        z-index: 9999;
+    }
+
+    div#title p {
+        font-size: 1rem;
+    }
+
+    div#nav .generated {
+        display: none;
+    }
+
+    div#main {
+        width: auto;
+        background: white;
+        box-shadow: none;
+        padding: 2% 2% 2%;
+        overflow: auto;
+        margin: 3%;
+    }
+
+    .container {
+        width: 100%;
+        margin: 0 0;
+    }
+
+    .categoryTitle {
+        font-size: 1.5rem;
+    }
+
+    .markdown-body h1 {
+        padding-top: 0.3em;
+        border-bottom: 1px solid #eeeeee;
+    }
+
+}
+
