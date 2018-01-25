@@ -1,91 +1,213 @@
 <!DOCTYPE html>
+<!--suppress ALL -->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+
     <title>文章内容</title>
+
     <link rel="SHORTCUT ICON" href="./img/icon.jpg">
-    <script src="./js/jquery.min.js">
-    </script>
     <link rel="stylesheet" href="css/github.css"/>
-    <script src="js/marked.js"></script>
-    <link href="css/prettify.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
-    <link href="css/content.css" rel="stylesheet">
 
+    <script src="./js/jquery.min.js"></script>
     <script src="js/storm.js"></script>
-    <script>
-        var postName = getParaValue("name");
-        //获取文章信息
-        var post = getPostByName(postName);
-        //获取并渲染写入文章正文
-        var postName = getParaValue("name");
-        //获取文章信息
-        var post = getPostByName(postName);
-        //渲染文章标题
-        $("#title").html("Hello world!");
-        //获取并渲染写入文章正文
-        $.get("./md/" + postName + ".md").success(function (content) {
-            $(".markdown-body").append(marked(content));
-            $("pre").addClass("prettyprint linenums");
-            $("title").html($("h1").html());
+    <script src="js/marked.js"></script>
 
-            adjustMainHeight();
-        }).error(RedirectTo404);
-    </script>
+    <link rel="stylesheet" href="./css/github_hl.css">
+    <script src="./js/highlight.min.js"></script>
 
 </head>
 <body>
 
 <div id="nav">
-
     <script>
         getNavBar();
     </script>
-
 </div>
 
 <div id="title">
     <div class="container">
-        <script>
-            var info = "<h1>" + post.title + "</h1>" + "<p>" + "<img src='./img/date.png'>" + "  " + post.date + "  " +
-                "<img src='./img/class.png'>" + "  " + getCategoryTextByName(post.category) + "</p>";
-            $("div#title .container").append(info);
-        </script>
     </div>
 </div>
 
-<div id="main">
-
-    <div id="content">
-        <article class="markdown-body">
-
-        </article>
+<div class="container postContainer">
+    <div class="leftCol">
+        <div id="author">
+            <div id="avatar">
+                <img src="./img/icon.jpg">
+            </div>
+            <div id="name">
+                <a href="./about.html" title="关于我">stormlin</a>
+            </div>
+            <div class="contactList">
+                <div class="contact">
+                    <a href="https://github.com/K9A2" target="_blank">
+                        <img src="./img/GitHub.png" alt="前往我的 GitHub" title="前往我的 GitHub">
+                    </a>
+                </div>
+                <div class="contact">
+                    <a href="http://blog.csdn.net/atmiao" target="_blank" title="前往我的 CSDN 博客">
+                        <img src="./img/csdn.png" alt="前往我的 CSDN 博客">
+                    </a>
+                </div>
+                <div class="contact">
+                    <a href="mailto:lin-jinting@outlook.com" target="_blank" title="给我发一封邮件">
+                        <img src="./img/mail.png" alt="给我发一封邮件">
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div id="toc"></div>
     </div>
+    <div class="rightCol">
+        <div id="warning">
+            <span>本文章已经发表超过一年，其中部分内容可能已过时，请注意</span>
+        </div>
+        <div id="main">
+            <div id="content">
+                <article class="markdown-body"></article>
+            </div>
+        </div>
+    </div>
+</div>
 
-    <div id="replies">
-        <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
-        <script src="https://img1.cache.netease.com/f2e/tie/yun/sdk/loader.js"></script>
-        <script>
-            var cloudTieConfig = {
-                url: document.location.href,
-                sourceId: "",
-                productKey: "4eb2bc057fdf4c72a3abfb849ee0f0b4",
-                target: "cloud-tie-wrapper"
+<div id='toTop' title="返回顶部">
+    <div class="arrow"></div>
+    <div class="stick"></div>
+</div>
+
+<!--代码高亮与文档渲染-->
+<script>
+    var rendererMD = new marked.Renderer();
+    marked.setOptions({
+        renderer: rendererMD,
+        gfm: true,
+        tables: true,
+        breaks: false,
+        pedantic: false,
+        sanitize: false,
+        smartLists: true,
+        smartypants: false
+    });
+
+    marked.setOptions({
+        highlight: function (code) {
+            return hljs.highlightAuto(code).value;
+        }
+    });
+
+    var requestedPost = null;
+    var postName = getParaValue("name");
+
+    if (postName == null || postName == '') {
+        window.location.href = './index.html';
+    }
+
+    $.ajax(settings.postPath).done(function (data) {
+        $(data).find("posts").find("post-item").each(function () {
+            var tagArray = $(this).children("tag").text().toString().split(',');
+            for (var i = 0; i < tagArray.length; i++) {
+                tagArray[i] = tagArray[i].trim();
+            }
+            var post = {
+                id: $(this).children("id").text(),
+                name: $(this).children("name").text(),
+                title: $(this).children("title").text(),
+                category: $(this).children("category").text(),
+                tag: tagArray,
+                date: $(this).children("date").text(),
+                description: $(this).children("description").text()
             };
-            var yunManualLoad = true;
-            Tie.loader("aHR0cHM6Ly9hcGkuZ2VudGllLjE2My5jb20vcGMvbGl2ZXNjcmlwdC5odG1s", true);
-        </script>
-    </div>
 
-</div>
+            if (post.name === postName) {
+                requestedPost = post;
+            }
+        });
+        var post = requestedPost;
 
-<!--代码高亮-->
-<script src="js/run_prettify.js?lang=css&amp;skin=default"></script>
+        var header = $("<h1></h1>", {
+            text: post.title
+        });
+        var date = $("<p></p>", {
+            text: "日期：" + post.date
+        });
+        var tagList = $("<div></div>", {
+            text: "标签：",
+            id: "tags"
+        });
+        for (var i = 0; i < post.tag.length; i++) {
+            var tagLink = $("<a></a>", {
+                text: post.tag[i],
+                href: "./tag.html?tag=" + post.tag[i]
+            });
+            tagLink.appendTo(tagList);
+        }
+        var container = $("div#title .container");
+        container.append(header);
+        container.append(date);
+        container.append(tagList);
+
+        var original = new Date(post.date);
+        var current = new Date();
+        var diff = Math.floor((current.getTime() - original.getTime()) / (24 * 3600 * 1000));
+        if (diff <= 365) {
+            $("#warning").hide();
+        }
+        $("#main").css("margin", "1rem 0 0 0");
+        // 获取并渲染写入文章正文
+        $.get("./md/" + postName + ".md").success(function (content) {
+            $(".markdown-body").append(marked(content));
+            $("title").html($("h1").html());
+            // 用以去除写作 Markdown 文档中自然留下的一级标题
+            var fileHeader = $("#content").find("h1");
+            fileHeader.remove();
+            getTOC("toc");
+            hljs.initHighlightingOnLoad();
+
+            // 添加行号
+            $(function () {
+                // 针对每一个代码块都执行如下操作
+                $('pre code').each(function () {
+                    // 把代码块按行分成数组，此处获取代码行数
+                    var lines = $(this).text().split('\n').length - 1;
+                    var $numbering = $('<ol/>').addClass('pre-numbering');
+                    $(this)
+                        .addClass('has-numbering')
+                        .parent()
+                        .append($numbering);
+                    for (i = 1; i <= lines; i++) {
+                        $numbering.append($('<li/>').text(i));
+                    }
+                });
+            });
+
+            // 修改图片路径
+            $(function () {
+                // 获取所有 markdown-body 元素下的 img 元素
+                $("p img").each(function () {
+                    /* 把图片相对于 markdown 文件的相对路径改为相对于 post.html 的相对路径 */
+                    var image = $(this);
+                    var path = new String(image.attr("src"));
+                    var names = path.toString().split("/");
+                    image.attr("src", "./md/img/" + names[names.length - 1]);
+                })
+            })
+        }).error(RedirectTo404);
+    });
+</script>
 
 <script>
     getFooter();
 </script>
 
+<script>
+
+</script>
+
 </body>
+
 </html>

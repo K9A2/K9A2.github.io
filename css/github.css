@@ -340,7 +340,7 @@
 }
 
 .markdown-body code {
-    font-family: "Source Code Pro", "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+    font-family: "Source Code Pro", "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace !important;
     font-size: 0.75rem;
 }
 
@@ -606,10 +606,6 @@
 
 /*font-size: 85%*/
 .markdown-body code {
-    padding: 0;
-    padding-top: 0.2em;
-    padding-bottom: 0.2em;
-    margin: 0;
     font-size: 100%;
     background-color: rgba(27, 31, 35, 0.05);
     border-radius: 3px;
@@ -652,6 +648,8 @@
     font-size: 85%;
     line-height: 1.45;
     border-radius: 3px;
+    background: #f6f8fa;
+    word-break: break-all;
 }
 
 .markdown-body pre code {
@@ -660,7 +658,7 @@
     padding: 0;
     margin: 0;
     overflow: visible;
-    line-height: inherit;
+    line-height: 20px;
     word-wrap: normal;
     background-color: transparent;
     border: 0;

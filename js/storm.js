@@ -33,12 +33,8 @@ navPages = [
         url: "./index.html",
         name: "首页"
     },
-    category = {
-        url: "./category.html",
-        name: "分类"
-    },
     about = {
-        url: "./page.html?name=about",
+        url: "./about.html",
         name: "关于我"
     },
     dogFood = {
@@ -47,21 +43,152 @@ navPages = [
     }
 ];
 
+// 给 tag 上的颜色，在样式文件中有详细定义
+colors = [
+    "green",
+    "purple",
+    "orange",
+    "red",
+    "blue",
+    "lightBlue"
+];
+
+/**
+ * 实现点击返回页面顶部功能，来自 http://blog.csdn.net/zhyh1986/article/details/8644899
+ */
+$(function () {
+    var $backToTopEle = $('#toTop'), $backToTopFun = function () {
+        // noinspection Annotator
+        // noinspection Annotator
+        // noinspection Annotator
+        var st = $(document).scrollTop(), winh = $(window).height();
+        (st > 200) ? $backToTopEle.fadeIn('slow') : $backToTopEle.fadeOut('slow');
+        //IE6下的定位
+        if (!window.XMLHttpRequest) {
+            $backToTopEle.css("top", st + winh - 166);
+        }
+    };
+    $('#toTop').click(function () {
+        $("html, body").animate({scrollTop: 0}, 1200);
+    });
+    $backToTopEle.hide();
+    $backToTopFun();
+    $(window).bind("scroll", $backToTopFun);
+    $('#catalogWord').click(function () {
+        $("#catalog").slideToggle(600);
+    })
+});
+
+/**
+ * 获取指定 tag 下的博客信息
+ *
+ * @param tag 指定的 tag
+ * @returns {Array} 博客信息列表
+ */
+function getPostByTag(tag) {
+    var posts = [];
+
+    $.ajax({
+        url: settings.postPath,
+        async: false,
+        error: function () {
+            alert("Unable to reach the post list file.");
+        },
+        success: function (xml) {
+            $(xml).find("posts").find("post-item").each(function () {
+                // noinspection Annotator
+                var tagArray = $(this).children("tag").text().toString().split(',');
+                for (var i = 0; i < tagArray.length; i++) {
+                    tagArray[i] = tagArray[i].trim();
+                }
+                if (tagArray.indexOf(tag) >= 0) {
+                    // 包含指定 tag
+                    // noinspection Annotator
+                    // noinspection Annotator
+                    // noinspection Annotator
+                    var categoryItem = {
+                        id: $(this).children("id").text(),
+                        name: $(this).children("name").text(),
+                        title: $(this).children("title").text(),
+                        category: $(this).children("category").text(),
+                        tag: tagArray,
+                        date: $(this).children("date").text(),
+                        description: $(this).children("description").text()
+                    };
+                    posts.push(categoryItem);
+                }
+            })
+        }
+    });
+
+    // 结果按照日期排序
+    posts.sort(by("date"));
+    posts.reverse();
+
+    return posts;
+}
+
+function getTOC(id) {
+    // 去除连接中的锚点
+    var linkBase = document.location.href;
+    var j = linkBase.length;
+    for (; j > 0; j--) {
+        if (linkBase.charAt(j) === '#') {
+            break
+        }
+    }
+    if (j !== linkBase.length) {
+        linkBase = linkBase.substring(0, j);
+    }
+
+    var i = 0;
+    var toc = $('#toc');
+    var headers = $("#content :header");
+    headers.each(function () {
+        var indent = 'indent_4';
+        if ($(this).prop("tagName") === "H2") {
+            indent = 'indent_2';
+        } else if ($(this).prop("tagName") === "H3") {
+            indent = 'indent_3';
+        } else if ($(this).prop("tagName") === "H4") {
+            indent = 'indent_4';
+        } else if ($(this).prop("tagName") === "H5") {
+            indent = 'indent_5';
+        } else if ($(this).prop("tagName") === "H6") {
+            indent = 'indent_6';
+        }
+        $(this).attr("id", i);
+        var box = $('<div></div>', {
+            class: 'linkBox'
+        });
+        var list = $('<li></li>', {
+            class: indent
+        });
+        var link = $('<a>', {
+            text: this.innerHTML.toString(),
+            title: this.innerHTML.toString(),
+            href: linkBase + '#' + i++
+        }).appendTo(list);
+        list.appendTo(box);
+        box.appendTo(toc);
+    });
+}
 
 /**
  * Get the target parameter specified by name from url.
  *
  * @param name Target parameter name
- * @returns {null}
+ * @returns {string}
  */
 function getParaValue(name) {
 
     var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
     var result = window.location.search.substr(1).match(reg);
 
-    if (result !== null) return result[2];
+    if (result !== null) { // noinspection Annotator
+        return result[2];
+    }
 
-    return null;
 }
 
 /**
@@ -170,6 +297,7 @@ function getIndexPostList() {
                     name: $(this).children("name").text(),
                     title: $(this).children("title").text(),
                     category: $(this).children("category").text(),
+                    tag: $(this).children("tag").text().toString().split(','),
                     date: $(this).children("date").text(),
                     description: $(this).children("description").text()
                 };
@@ -237,18 +365,22 @@ function getPostByName(postName) {
 
     $.ajax({
         url: settings.postPath,
-        async: false,
+        async: true,
         error: function (e) {
             alert("Unable to reach the post list file.");
-            console.log(e.message);
         },
         success: function (xml) {
             $(xml).find("posts").find("post-item").each(function () {
+                var tagArray = $(this).children("tag").text().toString().split(',');
+                for (var i = 0; i < tagArray.length; i++) {
+                    tagArray[i] = tagArray[i].trim();
+                }
                 var post = {
                     id: $(this).children("id").text(),
                     name: $(this).children("name").text(),
                     title: $(this).children("title").text(),
                     category: $(this).children("category").text(),
+                    tag: tagArray,
                     date: $(this).children("date").text(),
                     description: $(this).children("description").text()
                 };
@@ -282,7 +414,7 @@ function printPostList(posts) {
                 '           </a>' +
                 '           <p class="date_and_category">' +
                 posts[i].date +
-                '               <a href="./category.html?category=' + posts[i].category + '">' +
+                '               <a href="./tag.html?tag=' + posts[i].category + '">' +
                 getCategoryTextByName(posts[i].category) +
                 '               </a>' +
                 '           </p>' +
@@ -293,7 +425,7 @@ function printPostList(posts) {
                 '           </a>' +
                 '       </div>';
 
-            $("#main").append(item);
+            $("#index").append(item);
         }
     }
 
@@ -386,9 +518,10 @@ var by = function (name) {
  */
 function getFooter() {
 
+    var today = new Date();
     var footerText = '';
     footerText += '<div id="footer">' +
-        '              <p>Copyright © 2014 - 2017 stormlin.</p>' +
+        '              <p>Copyright © 2014 - ' + today.getFullYear() + ' stormlin.</p>' +
         '              <p>All Rights Reserved.</p>';
     footerText += '    <p>' +
         '                  <a href="http://www.miitbeian.gov.cn">备案号：粤ICP备16029958号-1</a>' +
@@ -396,47 +529,6 @@ function getFooter() {
         '          </div>';
 
     $("body").append(footerText);
-
-}
-
-/**
- * Adjust div#main to make the page height at least one page height
- */
-function adjustMainHeight() {
-
-    if (window.innerHeight) {
-        var windowHeight = window.innerHeight;
-    }
-    else if ((document.body) && (document.body.clientHeight)) {
-        var winHeight = document.body.clientHeight;
-    }
-    var main = $("#main");
-    var outerHeight = main.outerHeight(true);
-    var innerHeight = main.height();
-    var rem = parseInt(window.getComputedStyle(document.documentElement)["fontSize"]);
-    var title = $("#blog-info");
-    if (title === null) {
-        alert("null");
-        if ((outerHeight + 3 * rem) < windowHeight) {
-            alert("in");
-            var sub = windowHeight - (outerHeight + $("#footer").outerHeight());
-            main.height(innerHeight + sub);
-        }
-    } else {
-        alert("not null");
-        alert(outerHeight);
-        if ((outerHeight + title.outerHeight()) < windowHeight) {
-            alert("in");
-            alert("windowHeight: " + windowHeight);
-            alert("outerHeight: " + outerHeight);
-            alert("footerHeight: " + $("#footer").outerHeight());
-            var sub = windowHeight - (outerHeight + $("#footer").outerHeight());
-            alert("innerheight: " + innerHeight);
-            alert("sub: " + sub);
-            alert(innerHeight + sub);
-            main.height(innerHeight + sub);
-        }
-    }
 
 }
 
@@ -456,8 +548,6 @@ function printPostAndAdjustHeight() {
         $(".markdown-body").append(marked(content));
         $("pre").addClass("prettyprint linenums");
         $("title").html($("h1").html());
-
-        adjustMainHeight();
     }).error(RedirectTo404);
 
 }

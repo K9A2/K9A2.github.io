@@ -1,0 +1,140 @@
+/*
+
+github.com style (c) Vasily Polovnyov <vast@whiteants.net>
+
+*/
+
+.hljs {
+    display: block;
+    overflow-x: auto;
+    padding: 0.5em;
+    color: #333;
+    background: #f8f8f8;
+}
+
+.hljs-comment,
+.hljs-quote {
+    color: #998;
+    font-style: italic;
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-subst {
+    color: #d73a49;
+    font-weight: normal;
+}
+
+.hljs-number,
+.hljs-literal,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag .hljs-attr {
+    color: #008080;
+}
+
+.hljs-string,
+.hljs-doctag {
+    color: #d14;
+}
+
+.hljs-title,
+.hljs-section,
+.hljs-selector-id {
+    color: #900;
+    font-weight: normal;
+}
+
+.hljs-subst {
+    font-weight: normal;
+}
+
+.hljs-type,
+.hljs-class .hljs-title {
+    color: #458;
+    font-weight: normal;
+}
+
+.hljs-tag,
+.hljs-name,
+.hljs-attribute {
+    color: #000080;
+    font-weight: normal;
+}
+
+.hljs-regexp,
+.hljs-link {
+    color: #009926;
+}
+
+.hljs-symbol,
+.hljs-bullet {
+    color: #990073;
+}
+
+.hljs-built_in,
+.hljs-builtin-name {
+    color: #6f42c1;
+}
+
+.hljs-meta {
+    color: #999;
+    font-weight: normal;
+}
+
+.hljs-deletion {
+    background: #fdd;
+}
+
+.hljs-addition {
+    background: #dfd;
+}
+
+.hljs-emphasis {
+    font-style: italic;
+}
+
+.hljs-strong {
+    font-weight: normal;
+}
+
+/* 添加行号用的代码 */
+pre {
+    position: relative;
+    padding-left: 3.5rem !important;
+}
+
+code.has-numbering {
+    margin-left: 26px;
+    font-size: 13px !important;
+}
+
+.pre-numbering {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3rem;
+    height: 100%;
+    background-color: #EEE;
+    text-align: right;
+    font-family: consolas, monospace;
+    font-size: 1rem;
+    color: #AAA;
+    list-style: none;
+}
+
+ol.pre-numbering {
+    padding-left: 0 !important;
+    padding-top: 1rem !important;
+    margin-bottom: 0 !important;
+    list-style: none !important;
+}
+
+.pre-numbering li {
+    margin: 0 0.5rem 0 0;
+    line-height: 20px;
+}
+
+code span {
+    line-height: 20px;
+}

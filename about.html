@@ -16,29 +16,48 @@
 
     <script src="js/storm.js"></script>
     <script>
-        printPostAndAdjustHeight();
+        // 渲染文章标题
+        $("#title").html("Hello world!");
+        // 获取并渲染写入文章正文
+        $.get("./md/about.md").success(function (content) {
+            $(".markdown-body").append(marked(content));
+            $("pre").addClass("prettyprint linenums");
+            $("title").html($("h1").html());
+            getTOC("toc");
+        }).error(RedirectTo404);
     </script>
 
 </head>
 <body>
 
 <div id="nav">
-
     <script>
         getNavBar();
     </script>
-
 </div>
 
-
-<div id="main" style="margin-top: 3rem">
-
-    <div id="content">
-        <article class="markdown-body">
-
-        </article>
+<div id="title">
+    <div id="info" class="container">
+        <h1>About me</h1>
     </div>
+</div>
 
+<div class="container postContainer aboutBody">
+    <div class="leftCol">
+        <div id="toc"></div>
+    </div>
+    <div class="rightCol">
+        <div id="main">
+            <div id="content">
+                <article class="markdown-body"></article>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id='toTop' title="返回顶部">
+    <div class="arrow"></div>
+    <div class="stick"></div>
 </div>
 
 <!--代码高亮-->
@@ -46,6 +65,10 @@
 
 <script>
     getFooter();
+</script>
+
+<script>
+
 </script>
 
 </body>
